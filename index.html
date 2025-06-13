@@ -7,7 +7,24 @@
 <script src="/assets/main.js"></script>
 <!-- JsDelivr 加速 -->
 <script src="https://cdn.jsdelivr.net/gh/zhangyu-info/zhangyu.io@main/assets/main.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+  pdfjsLib.getDocument('document.pdf').promise.then(pdf => {
+    pdf.getPage(1).then(page => {
+      const viewport = page.getViewport({ scale: 1.5 });
+      const canvas = document.createElement('canvas');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+      document.getElementById('pdf-viewer').appendChild(canvas);
+      page.render({ canvasContext: canvas.getContext('2d'), viewport });
+    });
+  });
+</script>
 <body>
     <h1>Hello GitHub Pages!张雨的网站</h1>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<div id="pdf-viewer" style="width:100%; height:80vh;"></div>
+
 </body>
 </html>
